@@ -179,21 +179,6 @@ app.view("delete_confirmed", async ({ ack, body, context, logger, view }) => {
   }
 });
 
-app.action("load_in_slack", async ({ ack, action, body, logger }) => {
-  try {
-    await ack();
-    const id = body.is_enterprise_install ? body.enterprise.id : body.team.id;
-    const auth = await fetchAuth(id);
-    await apiCall(
-      "get",
-      `storybuilder/conversation/send-to-slack?conversation_id=${action.value}`,
-      auth
-    );
-  } catch (error) {
-    logger.error(error);
-  }
-});
-
 app.action("edit_config", async ({ ack, body, context, logger }) => {
   try {
     await ack();
